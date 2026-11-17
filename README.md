@@ -58,16 +58,16 @@ All commands run from `code/`. Below, `DEV=au01,au08,bo17,ga10,ga12,jo11,mo02,ph
 with `--role dev --data ../data/official_data --sites $DEV` or with
 `--role select|confirm --data ../data/official_train --split-file $SP` for the other splits.
 
-| Paper | Script | Command (official Test) |
+| Analysis in the paper | Script | Command (official Test) |
 |---|---|---|
-| Table 3, Table 4, App. A8, A10 (semantic vs structural, semantic words removed, previous node, 8-relation union, donor seeds) | `c16_run.py` | `python c16_run.py --data ../data/official_test --role test --dense $DM --out ../results/c16/test` |
-| App. A2 (seven basic conditions, token-matched contexts, question-matched donor) | `c14_run.py` | `python c14_run.py --data ../data/official_test --role test --dense $DM --out ../results/c14/test` |
-| Table 5, App. A1 (each relation: own vs another node), App. A4 (leave-one-out), App. A3 and A5 (dense retriever, WordNet synonyms), App. A7 answer inclusion and 64-word chunk baseline | `c12_run.py` | `python c12_run.py --data ../data/official_test --role test --dense BAAI/bge-small-en-v1.5 --perturb --out ../results/c12/test` |
-| App. A7 generative F1 (Qwen2.5-1.5B-Instruct) | `c12_gen.py` | `python c12_gen.py --data ../data/official_test --role test --out ../results/c12/gen_test` |
+| Main results: semantic vs structural relations, semantic words removed, previous node, union of all eight relations, donor seeds, per-split tests | `c16_run.py` | `python c16_run.py --data ../data/official_test --role test --dense $DM --out ../results/c16/test` |
+| Seven basic retrieval inputs, token-matched contexts, question-matched donor | `c14_run.py` | `python c14_run.py --data ../data/official_test --role test --dense $DM --out ../results/c14/test` |
+| Each relation on its own, leave-one-out of the semantic rules, dense retriever, WordNet synonyms, answer inclusion and the 64-word chunk baseline | `c12_run.py` | `python c12_run.py --data ../data/official_test --role test --dense BAAI/bge-small-en-v1.5 --perturb --out ../results/c12/test` |
+| Generative reader F1 (Qwen2.5-1.5B-Instruct) | `c12_gen.py` | `python c12_gen.py --data ../data/official_test --role test --out ../results/c12/gen_test` |
 | Extractive reader (RoBERTa, SQuAD 2.0) | `c9_qa.py` | `python c9_qa.py --data ../data/official_test --role test --out ../results/c9/test` |
-| Table 6 (rules vs explicit HTML markup) | `c15_map_audit.py` | `python c15_map_audit.py --data ../data/official_test --role test --out ../results/c15/test` |
-| Table 7, App. A8-5 (MarkupLM and rank fusion; dev and Test only) | `c17_markuplm.py` | `python c17_markuplm.py --data ../data/official_test --role test --out ../results/c17/test` |
-| App. A9 (relation weight λ, train sites) and App. A6 (ties, candidate length) | `c8_robust.py` | `python c8_robust.py --data ../data/official_train --role train --split-file $SP --diverse --out ../results/c8/train` |
+| Rules vs explicit HTML markup | `c15_map_audit.py` | `python c15_map_audit.py --data ../data/official_test --role test --out ../results/c15/test` |
+| MarkupLM and rank fusion (dev and Test only) | `c17_markuplm.py` | `python c17_markuplm.py --data ../data/official_test --role test --out ../results/c17/test` |
+| Relation weight λ (train sites), score ties and reader tokens | `c8_robust.py` | `python c8_robust.py --data ../data/official_train --role train --split-file $SP --diverse --out ../results/c8/train` |
 
 `c14_collect.py`, `c16_collect.py` and `c12_collect.py` gather the per-split summaries into one Markdown
 report. Every script writes a `*_summary.json` with a hash of the code that produced it.
